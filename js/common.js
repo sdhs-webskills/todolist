@@ -102,7 +102,7 @@ function items(){
     cnt=$(".list").length
     cnt_ac=$(".li_ac").length
     $("#item").text(`${cnt-cnt_ac} items left`)
-    console.log(cnt-cnt_ac)
+    // console.log(cnt-cnt_ac)
     $(".list").children(".check").html("")
     $(".li_ac").children(".check").html("&check;")
     if(cnt-cnt_ac==0){

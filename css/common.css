@@ -14,7 +14,7 @@ h1{font-size:70px;color:rgb(224, 146, 146);text-align:center;}
 .text{line-height:40px;padding-top:10px;font-size:25px;width:600px;padding:10px;margin-left:60px;word-break:break-all;}
 #controll{background:#fff;width:700px;height:30px;display:none;color:#aaa;justify-content:space-around;cursor:default;}
 #flex{display:flex;width:200px;justify-content:space-around;align-items:center;margin-right:100px;height:30px;}
-#flex span{border:1px solid rgba(0,0,0,0);border-radius:3px;line-height:21px;padding:0 3px;}
+#flex span{border:1px solid rgba(0,0,0,0);border-radius:3px;line-height:21px;padding:0 3px;cursor:pointer;}
 .sp_ac{border:1px solid gray!important;}
 #item,#cle{margin:0 20px;line-height:30px;width:120px;}
 #cle:hover{text-decoration:underline;cursor:pointer;}
