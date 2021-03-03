@@ -4,7 +4,7 @@ body{background:rgb(229, 255, 227);}
 h1{font-size:70px;color:rgb(146, 224, 146);text-align:center;}
 #input{background:#fff;box-shadow:0 2px 4px #666;width:700px;height:60px;}
 #all_sel{width:60px;height:40px;float:left;font-size:22px;color:#ccc;transform:rotate(90deg);transform-origin:left top;margin-left:40px;text-align:center;cursor:default;}
-/* #all_sel::before{content:'❯';font-size:22px;color:#ccc;} */
+ #all_sel::before{content:'❯';font-size:22px;color:#ccc;} 
 #main{background:none;border:none;font-size:25px;line-height:40px;margin-left:-40px;margin-top:10px;margin-bottom:10px;}
 #main:focus{outline:none;}
 #main::placeholder{color:#ccc;}
