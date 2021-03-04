@@ -29,7 +29,7 @@
 - 완료한 상태
 ```html
 <li class="list li_ac">
-	<div class="check"></div>
+	<div class="check">✓</div>
 	<p class="text"></p>
 	<p class="close">X</p>
 </li>
