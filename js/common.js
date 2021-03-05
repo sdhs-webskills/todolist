@@ -1,11 +1,17 @@
 let list = document.querySelector("#list");
 let input = document.querySelector("#main");
-let li  = document.querySelector("li.list")
+let li  = document.querySelector("li.list");
+let controll = document.querySelector("#controll");
 
 window.onload = function(){
-    
-    
+    // if(){
+    //     controll.style.display = "flex";
+    // };
+     
 };
+
+
+
 input.addEventListener("keydown", function(e){
     if(e.keyCode == 13){
         if(input.value === ""){
@@ -28,6 +34,7 @@ input.addEventListener("keydown", function(e){
         li.appendChild(p2);
         list.appendChild(li);
         input.value = "";
+        
         
         li.addEventListener("mouseover", function(){ // 마우스가 위로 올라가면 실행
             this.classList.add("hov");

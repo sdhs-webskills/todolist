@@ -6,7 +6,7 @@ h1{font-size:70px;color:rgb(146, 224, 146);text-align:center;}
 #all_sel{width:60px;height:40px;float:left;font-size:22px;color:#ccc;transform:rotate(90deg);transform-origin:left top;margin-left:40px;text-align:center;cursor:default;}
  #all_sel::before{content:'❯';font-size:22px;color:#ccc;} 
 #main{background:none;border:none;font-size:25px;line-height:40px;margin-left:-40px;margin-top:10px;margin-bottom:10px;}
-#main:focus{outline:none;}
+#main:focus{outline:none;} 
 #main::placeholder{color:#ccc;}
 #list{box-shadow:0 0 4px #666;margin-bottom:200px;}
 .list{background:#fff;width:700px;height:auto;position:relative;border-bottom:1px solid #ddd;}
