@@ -45,21 +45,17 @@ comBtn.addEventListener("click", function(){
 });
 
 cleBtn.addEventListener("click", function(){
-    for(let i=0; i<list.children.length; i++){
-        if(list.children[i].classList.contains("li_ac")){
-            list.children[i].remove();
-        }
-    }
+    [...document.querySelectorAll(".li_ac")].forEach(list => {
+        list.remove();
+    });
+
     menu();
 });
 
-
-
-
-input.addEventListener("keydown", function(e){
-    if(e.keyCode == 13){
+input.addEventListener("keydown", function({ key }){
+    if(key == "Enter"){
         if(input.value === ""){
-            alert("정보를 입력하세요");
+            alert("입력하실 내용 입력하세요");
             
             return false;
         }
