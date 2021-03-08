@@ -1,12 +1,12 @@
-let list = document.querySelector("#list");
-let input = document.querySelector("#main");
-let li  = document.querySelector("li.list");
-let controll = document.querySelector("#controll");
+const list = document.querySelector("#list");
+const input = document.querySelector("#main");
+const li  = document.querySelector("li.list");
+const controll = document.querySelector("#controll");
 
-let allBtn = document.querySelector("#all");
-let actBtn = document.querySelector("#act");
-let comBtn = document.querySelector("#com");
-let cleBtn = document.querySelector("#cle");
+const allBtn = document.querySelector("#all");
+const activeBtn = document.querySelector("#act");
+const completedBtn = document.querySelector("#com");
+const clearBtn = document.querySelector("#cle");
 
 
 allBtn.addEventListener("click", function(){
@@ -21,7 +21,7 @@ allBtn.addEventListener("click", function(){
 });
 
 
-actBtn.addEventListener("click", function(){
+activeBtn.addEventListener("click", function(){
     for(let i=0; i<list.children.length; i++){
         if(list.children[i].classList.contains("li_ac")){
             list.children[i].style.display = "none";
@@ -33,7 +33,7 @@ actBtn.addEventListener("click", function(){
 });
 
 
-comBtn.addEventListener("click", function(){
+completedBtn.addEventListener("click", function(){
     for(let i=0; i<list.children.length; i++){
         if(!list.children[i].classList.contains("li_ac")){
             list.children[i].style.display = "none";
@@ -44,7 +44,7 @@ comBtn.addEventListener("click", function(){
     menu();
 });
 
-cleBtn.addEventListener("click", function(){
+clearBtn.addEventListener("click", function(){
     [...document.querySelectorAll(".li_ac")].forEach(list => {
         list.remove();
     });
@@ -59,10 +59,10 @@ input.addEventListener("keydown", function({ key }){
             
             return false;
         }
-        let li = document.createElement("li");
-        let div = document.createElement("div");
-        let p = document.createElement("p");
-        let p2 = document.createElement("p");
+        const li = document.createElement("li");
+        const div = document.createElement("div");
+        const p = document.createElement("p");
+        const p2 = document.createElement("p");
         li.classList.add("list");
         div.classList.add("check");
         p.classList.add("text");
