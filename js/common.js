@@ -3,12 +3,56 @@ let input = document.querySelector("#main");
 let li  = document.querySelector("li.list");
 let controll = document.querySelector("#controll");
 
-window.onload = function(){
-    // if(){
-    //     controll.style.display = "flex";
-    // };
-     
-};
+let allBtn = document.querySelector("#all");
+let actBtn = document.querySelector("#act");
+let comBtn = document.querySelector("#com");
+let cleBtn = document.querySelector("#cle");
+
+
+allBtn.addEventListener("click", function(){
+    for(let i=0; i<list.children.length; i++){
+        if(list.children[i].classList.contains("list")){
+            list.children[i].style.display = "block";
+        } else {
+            list.children[i].style.display = "none";
+        }
+    }
+    menu();
+});
+
+
+actBtn.addEventListener("click", function(){
+    for(let i=0; i<list.children.length; i++){
+        if(list.children[i].classList.contains("li_ac")){
+            list.children[i].style.display = "none";
+        } else {
+            list.children[i].style.display = "block";
+        }
+    }
+    menu();
+});
+
+
+comBtn.addEventListener("click", function(){
+    for(let i=0; i<list.children.length; i++){
+        if(!list.children[i].classList.contains("li_ac")){
+            list.children[i].style.display = "none";
+        } else {
+            list.children[i].style.display = "block";
+        }
+    }
+    menu();
+});
+
+cleBtn.addEventListener("click", function(){
+    for(let i=0; i<list.children.length; i++){
+        if(list.children[i].classList.contains("li_ac")){
+            list.children[i].remove();
+        }
+    }
+    menu();
+});
+
 
 
 
@@ -32,7 +76,7 @@ input.addEventListener("keydown", function(e){
         li.appendChild(div);
         li.appendChild(p);
         li.appendChild(p2);
-        list.appendChild(li);
+        list.insertAdjacentElement("afterbegin", li);
         input.value = "";
         
         
@@ -44,6 +88,7 @@ input.addEventListener("keydown", function(e){
             this.classList.remove("hov");
         });
     }
+    menu();
 });
 
 list.addEventListener("click", function({ target }){
@@ -55,3 +100,12 @@ list.addEventListener("click", function({ target }){
         target.parentNode.children[0].innerText = `✓`;
     };
 });
+
+
+let menu = function(){
+    if(list.children.length > 1) {
+        controll.style.display = "flex";
+    }else{
+        controll.style.display = "none";
+    }
+};
