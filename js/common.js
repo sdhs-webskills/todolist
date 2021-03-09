@@ -56,21 +56,6 @@ class TodoApp{
 	};
 };
 
-class TodoItem extends TodoApp{
-	constructor(value) {
-		super();
-
-		const list = new Li();
-
-		list.class = "list";
-		list.appendElement("div", {class: "check"}, "");
-		list.appendElement("p", {class: "text"}, value);
-		list.appendElement("p", {class: "close"}, "X");
-
-		return list;
-	};
-};
-
 class Li extends TodoApp{
 	constructor(text = "") {
 		super();
@@ -85,6 +70,21 @@ class Li extends TodoApp{
 		this.element.__proto__ = Object.assign(this, Object.create(HTMLElement.prototype));
 
 		return this.element;
+	};
+};
+
+class TodoItem extends TodoApp{
+	constructor(value) {
+		super();
+
+		const list = new Li();
+
+		list.class = "list";
+		list.appendElement("div", {class: "check"}, "");
+		list.appendElement("p", {class: "text"}, value);
+		list.appendElement("p", {class: "close"}, "X");
+
+		return list;
 	};
 };
 
