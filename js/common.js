@@ -4,6 +4,14 @@ class TodoApp{
 	};
 
 	appendElement(tag, attr = {}, text = "") {
+		if(typeof tag === "object") {
+			if(attr?.position) {
+				return this.insertAdjacentElement(position, tag);
+			};
+
+			return this.append(tag);
+		};
+
 		const element = document.createElement(tag);
 		element.innerHTML = text;
 
