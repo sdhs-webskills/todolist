@@ -8,6 +8,7 @@ const allBtn = document.querySelector("#all");
 const activeBtn = document.querySelector("#act");
 const completedBtn = document.querySelector("#com");
 const clearBtn = document.querySelector("#cle");
+const allCheck = document.querySelector("#all_sel");
 
 const Menu = function(){
     if(list.children.length > 1) {
@@ -17,9 +18,6 @@ const Menu = function(){
     }
 };
 
-window.addEventListener("click", function(){
-    // console.log("as");
-});
 
 const Border = function(th){
     [...th.parentNode.children].forEach((element) => {
@@ -56,28 +54,21 @@ const ComCount = function(){
     });
 };
 
-const CleCount = function(){
-    [...list.children].forEach(function(ele){
-    //     if(ele.classList.contains("list")){
-    //         pos++;
-    //     } else {
-    //         count.innerHTML = 0;
-    //     }
-    //     count.innerHTML = pos;
-    });
-};
 
 clearBtn.addEventListener("click", function(){
+
+    //clearBtn버튼 클릭시 완료된 모든 리스트 삭제 시키는 것
     [...document.querySelectorAll(".li_ac")].forEach((list) => {
         list.remove();
     });
     allBtn.click();
-    CleCount();
     Menu();
 });
 
 
 allBtn.addEventListener("click", function(){
+
+    //allBtn버튼 클릭시 모든 리스트를 표시 시키는거
     [...list.children].forEach(function(ele){
         if(ele.classList.contains("list")){
             ele.style.display = "block";
@@ -91,6 +82,8 @@ allBtn.addEventListener("click", function(){
 });
 
 activeBtn.addEventListener("click", function(){
+
+    //activeBtn버튼 클릭시 완료되지 않는 것만 표시 시키는거
     [...list.children].forEach(function(ele){
         if(ele.classList.contains("li_ac")){
             ele.style.display = "none";
@@ -105,6 +98,8 @@ activeBtn.addEventListener("click", function(){
 
 
 completedBtn.addEventListener("click", function(){
+
+    //completedBtn버튼 클릭시 완료된것만 표시 시키는거
     [...list.children].forEach(function(ele){
         if(!ele.classList.contains("li_ac")){
             ele.style.display = "none";
@@ -119,6 +114,7 @@ completedBtn.addEventListener("click", function(){
 
 
 input.addEventListener("keydown", function({ key }){
+    // input에세 엔터시 리스트 추가 하는거 
     if(key == "Enter"){
         if(input.value === ""){
             alert("입력하실 내용 입력하세요");
@@ -143,14 +139,46 @@ input.addEventListener("keydown", function({ key }){
         
         Count();
         
-        li.addEventListener("mouseover", function(){ // 마우스가 위로 올라가면 실행
+        // 마우스가 위로 올라가면 실행
+        li.addEventListener("mouseover", function(){ 
             this.classList.add("hov");
         });
         
-        li.addEventListener("mouseleave", function(){// 마우스에서 사라지면 실행
+        // 마우스에서 사라지면 실행
+        li.addEventListener("mouseleave", function(){
             this.classList.remove("hov");
         });
-        activeBtn.click();
+
+        //리스트 더블 클릭시 수정 하게 하는 거 [미완성]
+        li.addEventListener("dblclick", function({ target }){
+            
+            let inputText = Create("input");
+            
+            let telist = [...this.children].filter(function(ele){
+                return ele.classList.contains("text");
+            })
+            
+            inputText.value = telist[0].innerText;
+
+            this.children[1].remove();
+
+            this.children[0].after(inputText);
+
+            inputText.addEventListener("keydown", function({ key }){
+                if(key == "Enter"){
+                    // let p = Create("p");
+                    // p.innerHtml = inputText.value;
+                    // // console.log(li.children[1])
+                    // li.children[1].remove();
+                    // li.children[0].after(p);
+                }
+            });
+
+            console.log(this.children[1]);
+
+        });
+
+        allBtn.click();
     }
     Menu();
 });
@@ -160,20 +188,57 @@ list.addEventListener("click", function({ target }){
     if(target.classList.contains("check")) {
         // contains(): 지정한 클래스 값이 엘리먼트의 class 속성에 존재하는지 확인한다.
         // target된 곳에 class가 "check"이면 밑에 있는 거 실행
-        target.parentNode.classList.add("li_ac");
+        target.parentNode.classList.toggle("li_ac");
         // target된 곳에 부모 요소에 class 추가
-        target.parentNode.children[0].innerText = `✓`;
 
-        // allBtn.click();
-        activeBtn.click();
+        // 체크표시 해놓는거
+        if(target.parentNode.classList.contains("li_ac")){
+            target.parentNode.children[0].innerText = `✓`;
+        } else {
+            target.parentNode.children[0].innerText = ``;
+        }
     };
+
+
+    let lists = [...list.children].filter(function(ele){
+        return ele.classList.contains("li_ac")
+    })
+
+    // 모든 체크박스가 선택되면 전체선택 되게 하는거
+    if(lists.length === list.children.length-1){
+        allCheck.classList.add("all_ac");
+    } else {
+        allCheck.classList.remove("all_ac");
+    }
 });
 
+allCheck.addEventListener("click", function(){
+    
+    // 전체선택시 모든 체크 박스가 선택 되게 하는거
+    allCheck.classList.toggle("all_ac");
+    let lists = [...list.children].filter(function(ele){
+        return ele.classList.contains("list")
+    })
+    if(allCheck.classList.contains("all_ac")){
+        lists.forEach(function(el){
+            el.classList.add("li_ac")
+            el.children[0].innerHTML = `✓`;
+        });
+    } else {
+        lists.forEach(function(el){
+            el.classList.remove("li_ac")
+            el.children[0].innerHTML = ``;
+        });
+    }
+
+});
+
+
 list.addEventListener("click", function({ target }){
+
+    // X버튼 누를시 리스트 삭제하는거 
     if(target.classList.contains("close")) {
         target.parentNode.remove();
         Menu();
     };
 });
-
-
