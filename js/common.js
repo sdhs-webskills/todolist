@@ -1,6 +1,7 @@
 class Li{
-	constructor() {
+	constructor(text = "") {
 		this.element = document.createElement("li");
+		this.element.innerHTML = text;
 
 		for(const key in this.element) {
 			this[key] = this.element[key];
@@ -25,6 +26,16 @@ class Li{
 			return parent.append(this.element);
 
 		parent.insertAdjacentElement(position, this.element);
+	};
+
+	appendElement(tag, attr = {}, text = "") {
+		const element = document.createElement(tag);
+		element.innerHTML = text;
+
+		element.classList.add(attr?.class);
+
+		this.element.append(element);
+		return this;
 	};
 
 	set id(id) {
