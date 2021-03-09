@@ -13,7 +13,6 @@ class Li{
 	};
 
 	appendTo(target, position) {
-		const parent = document.querySelector(target);
 
 		if(typeof target === "object") {
 			if(!position)
@@ -22,6 +21,7 @@ class Li{
 			return target.insertAdjacentElement(position, this.element);
 		};
 
+		const parent = document.querySelector(target);
 		if(!position)
 			return parent.append(this.element);
 
