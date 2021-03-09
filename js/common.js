@@ -2,55 +2,121 @@ const list = document.querySelector("#list");
 const input = document.querySelector("#main");
 const li  = document.querySelector("li.list");
 const controll = document.querySelector("#controll");
+let count = document.querySelector("#item");
 
 const allBtn = document.querySelector("#all");
 const activeBtn = document.querySelector("#act");
 const completedBtn = document.querySelector("#com");
 const clearBtn = document.querySelector("#cle");
 
-
-allBtn.addEventListener("click", function(){
-    for(let i=0; i<list.children.length; i++){
-        if(list.children[i].classList.contains("list")){
-            list.children[i].style.display = "block";
-        } else {
-            list.children[i].style.display = "none";
-        }
+const Menu = function(){
+    if(list.children.length > 1) {
+        controll.style.display = "flex";
+    } else {
+        controll.style.display = "none";
     }
-    menu();
+};
+
+window.addEventListener("click", function(){
+    // console.log("as");
+});
+
+const Border = function(th){
+    [...th.parentNode.children].forEach((element) => {
+        element.classList.remove("sp_ac");
+    });
+    th.classList.add("sp_ac");
+};
+
+const Create = function(tag){
+    return document.createElement(tag);
+};
+
+const Count = function(){
+    return count.innerHTML = list.children.length - 1;
+};
+
+const ActCount = function(){
+    let pos = 0;
+    [...list.children].forEach(function(ele){
+        if(!ele.classList.contains("li_ac")){
+            pos++;
+        }
+        count.innerHTML = pos - 1;
+    });
+};
+
+const ComCount = function(){
+    let pos = 0;
+    [...list.children].forEach(function(ele){
+        if(ele.classList.contains("li_ac")){
+            pos++;
+        }
+        count.innerHTML = pos;
+    });
+};
+
+const CleCount = function(){
+    [...list.children].forEach(function(ele){
+    //     if(ele.classList.contains("list")){
+    //         pos++;
+    //     } else {
+    //         count.innerHTML = 0;
+    //     }
+    //     count.innerHTML = pos;
+    });
+};
+
+clearBtn.addEventListener("click", function(){
+    [...document.querySelectorAll(".li_ac")].forEach((list) => {
+        list.remove();
+    });
+    allBtn.click();
+    CleCount();
+    Menu();
 });
 
 
-activeBtn.addEventListener("click", function(){
-    for(let i=0; i<list.children.length; i++){
-        if(list.children[i].classList.contains("li_ac")){
-            list.children[i].style.display = "none";
+allBtn.addEventListener("click", function(){
+    [...list.children].forEach(function(ele){
+        if(ele.classList.contains("list")){
+            ele.style.display = "block";
         } else {
-            list.children[i].style.display = "block";
+            ele.style.display = "none";
         }
-    }
-    menu();
+    });
+    Count();
+    Border(this);
+    Menu();
+});
+
+activeBtn.addEventListener("click", function(){
+    [...list.children].forEach(function(ele){
+        if(ele.classList.contains("li_ac")){
+            ele.style.display = "none";
+        } else {
+            ele.style.display = "block";
+        }
+    });
+    ActCount();
+    Border(this);
+    Menu();
 });
 
 
 completedBtn.addEventListener("click", function(){
-    for(let i=0; i<list.children.length; i++){
-        if(!list.children[i].classList.contains("li_ac")){
-            list.children[i].style.display = "none";
+    [...list.children].forEach(function(ele){
+        if(!ele.classList.contains("li_ac")){
+            ele.style.display = "none";
         } else {
-            list.children[i].style.display = "block";
+            ele.style.display = "block";
         }
-    }
-    menu();
-});
-
-clearBtn.addEventListener("click", function(){
-    [...document.querySelectorAll(".li_ac")].forEach(list => {
-        list.remove();
     });
-
-    menu();
+    ComCount();
+    Border(this);
+    Menu();
 });
+
 
 input.addEventListener("keydown", function({ key }){
     if(key == "Enter"){
@@ -59,10 +125,10 @@ input.addEventListener("keydown", function({ key }){
             
             return false;
         }
-        const li = document.createElement("li");
-        const div = document.createElement("div");
-        const p = document.createElement("p");
-        const p2 = document.createElement("p");
+        const li = Create("li");
+        const div = Create("div");
+        const p = Create("p");
+        const p2 = Create("p");
         li.classList.add("list");
         div.classList.add("check");
         p.classList.add("text");
@@ -75,6 +141,7 @@ input.addEventListener("keydown", function({ key }){
         list.insertAdjacentElement("afterbegin", li);
         input.value = "";
         
+        Count();
         
         li.addEventListener("mouseover", function(){ // 마우스가 위로 올라가면 실행
             this.classList.add("hov");
@@ -83,9 +150,11 @@ input.addEventListener("keydown", function({ key }){
         li.addEventListener("mouseleave", function(){// 마우스에서 사라지면 실행
             this.classList.remove("hov");
         });
+        activeBtn.click();
     }
-    menu();
+    Menu();
 });
+
 
 list.addEventListener("click", function({ target }){
     if(target.classList.contains("check")) {
@@ -94,14 +163,17 @@ list.addEventListener("click", function({ target }){
         target.parentNode.classList.add("li_ac");
         // target된 곳에 부모 요소에 class 추가
         target.parentNode.children[0].innerText = `✓`;
+
+        // allBtn.click();
+        activeBtn.click();
+    };
+});
+
+list.addEventListener("click", function({ target }){
+    if(target.classList.contains("close")) {
+        target.parentNode.remove();
+        Menu();
     };
 });
 
 
-let menu = function(){
-    if(list.children.length > 1) {
-        controll.style.display = "flex";
-    }else{
-        controll.style.display = "none";
-    }
-};
