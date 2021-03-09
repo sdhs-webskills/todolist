@@ -1,15 +1,16 @@
-class Li{
-	constructor(text = "") {
-		this.element = document.createElement("li");
-		this.element.innerHTML = text;
+class TodoApp{
+	constructor() {
 
-		for(const key in this.element) {
-			this[key] = this.element[key];
-		}
+	};
 
-		this.element.__proto__ = Object.assign(this, Object.create(HTMLElement.prototype));
+	appendElement(tag, attr = {}, text = "") {
+		const element = document.createElement(tag);
+		element.innerHTML = text;
 
-		return this.element;
+		element.classList.add(attr?.class);
+
+		this.element.append(element);
+		return this;
 	};
 
 	appendTo(target, position) {
@@ -26,16 +27,6 @@ class Li{
 			return parent.append(this.element);
 
 		parent.insertAdjacentElement(position, this.element);
-	};
-
-	appendElement(tag, attr = {}, text = "") {
-		const element = document.createElement(tag);
-		element.innerHTML = text;
-
-		element.classList.add(attr?.class);
-
-		this.element.append(element);
-		return this;
 	};
 
 	set id(id) {
@@ -57,12 +48,40 @@ class Li{
 	};
 };
 
+class TodoItem extends TodoApp{
+	constructor(value) {
+		super();
+
+		const list = new Li();
+
+		list.class = "list";
+		list.appendElement("div", {class: "check"}, "");
+		list.appendElement("p", {class: "text"}, value);
+		list.appendElement("p", {class: "close"}, "X");
+
+		return list;
+	};
+};
+
+class Li extends TodoApp{
+	constructor(text = "") {
+		super();
+
+		this.element = document.createElement("li");
+		this.element.innerHTML = text;
+
+		for(const key in this.element) {
+			this[key] = this.element[key];
+		}
+
+		this.element.__proto__ = Object.assign(this, Object.create(HTMLElement.prototype));
+
+		return this.element;
+	};
+};
+
 const createTodo = (target, value) => {
-	const todoItem = new Li();
-	todoItem.class = "list";
-	todoItem.appendElement("div", {class: "check"}, "");
-	todoItem.appendElement("p", {class: "text"}, value);
-	todoItem.appendElement("p", {class: "close"}, "X");
+	const todoItem = new TodoItem(value);
 
 	todoItem.appendTo(target);
 };
