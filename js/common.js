@@ -56,3 +56,21 @@ class Li{
 		return this;
 	};
 };
+
+const createTodo = (target, value) => {
+	const todoItem = new Li();
+	todoItem.class = "list";
+	todoItem.appendElement("div", {class: "check"}, "");
+	todoItem.appendElement("p", {class: "text"}, value);
+	todoItem.appendElement("p", {class: "close"}, "X");
+
+	todoItem.appendTo(target);
+};
+
+const $input = document.querySelector("#main");
+$input.addEventListener("keyup", ({ target, key }) => {
+	if(key !== "Enter") return false;
+	if(target.value === "") return alert("공백은 입력할 수 없습니다");
+
+	createTodo("#list", target.value);
+});
