@@ -73,4 +73,5 @@ $input.addEventListener("keyup", ({ target, key }) => {
 	if(target.value === "") return alert("공백은 입력할 수 없습니다");
 
 	createTodo("#list", target.value);
+	target.value = "";
 });
