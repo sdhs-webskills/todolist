@@ -112,10 +112,17 @@ class TodoList{
 	};
 };
 
+const $list = document.querySelector("#list");
+const $controllor = document.querySelector("#controll");
+
+const controllorCheck = () => {
+	if($list.children.length > 0) $controllor.style.display = "flex";
+};
+
 const createTodo = (target, value) => {
 	const todoItem = new TodoItem(value);
 
-	todoItem.appendTo(target);
+	todoItem.appendTo(target, "afterbegin");
 };
 
 const $input = document.querySelector("#main");
@@ -123,6 +130,7 @@ $input.addEventListener("keyup", ({ target, key }) => {
 	if(key !== "Enter") return false;
 	if(target.value === "") return alert("공백은 입력할 수 없습니다");
 
+	controllorCheck($list);
 	createTodo("#list", target.value);
 	target.value = "";
 });
