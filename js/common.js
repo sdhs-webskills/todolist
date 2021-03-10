@@ -1,6 +1,6 @@
 class TodoApp{
-	constructor() {
-
+	constructor(target) {
+		this.target = document.querySelector(target);
 	};
 
 	appendElement(tag, attr = {}, text = "") {
@@ -35,6 +35,14 @@ class TodoApp{
 			return parent.append(this.element);
 
 		parent.insertAdjacentElement(position, this.element);
+	};
+
+	find(selector) {
+		return this.target.querySelector(selector);
+	};
+
+	findAll(className) {
+		return this.target.querySelectorAll(selector);
 	};
 
 	set id(id) {
