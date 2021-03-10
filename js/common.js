@@ -106,6 +106,10 @@ class TodoList{
 			item.remove();
 		});
 	};
+
+	item(index) {
+		return this.list[index];
+	};
 };
 
 const createTodo = (target, value) => {
