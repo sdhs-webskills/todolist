@@ -10,6 +10,8 @@ const activeBtn = document.querySelector("#act");
 const completedBtn = document.querySelector("#com");
 const clearBtn = document.querySelector("#cle");
 
+
+
 const Menu = function(){
     if(list.children.length > 1) {
         controll.style.display = "flex";
@@ -229,31 +231,57 @@ clearBtn.addEventListener("click", function(){
     Menu();
 });
 
+
+let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
+
+
+localStorage.setItem('items', JSON.stringify(itemsArray)); 
+// const data = JSON.parse(localStorage.getItem('items'));
+
+
+// data.forEach(item => { 
+//     liMaker(item); 
+// });
+
+let addLi = function(text){
+    const li = Create("li");
+    const div = Create("div");
+    const p = Create("p");
+    const p2 = Create("p");
+    li.classList.add("list");
+    div.classList.add("check");
+    p.classList.add("text");
+    p2.classList.add("close");
+    p.innerHTML = text.value;
+    p2.innerText = `X`;
+    li.appendChild(div);
+    li.appendChild(p);
+    li.appendChild(p2);
+    
+    return li;
+}
+
 input.addEventListener("keydown", function({ key }){
-    // input에세 엔터시 리스트 추가 하는거 
+    // input에세 엔터시 리스트 추가 하는거
+    
     if(key == "Enter"){
         if(input.value === ""){
             alert("입력하실 내용 입력하세요");
             
             return false;
         }
-        const li = Create("li");
-        const div = Create("div");
-        const p = Create("p");
-        const p2 = Create("p");
-        li.classList.add("list");
-        div.classList.add("check");
-        p.classList.add("text");
-        p2.classList.add("close");
-        p.innerHTML = input.value;
-        p2.innerText = `X`;
-        li.appendChild(div);
-        li.appendChild(p);
-        li.appendChild(p2);
+        
+        // localStorage.setItem('items', JSON.stringify(itemsArray));
+        itemsArray.push(this.value);
+
+        let li = addLi(this.value);
+        console.log(li)
         list.insertAdjacentElement("afterbegin", li);
         input.value = "";
-        
+
+
         Count();
+
         
         // 마우스가 위로 올라가면 실행
         li.addEventListener("mouseover", function(){ 
@@ -271,6 +299,7 @@ input.addEventListener("keydown", function({ key }){
     }
     Menu();
 });
+
 
 
 
