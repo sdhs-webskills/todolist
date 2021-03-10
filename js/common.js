@@ -96,6 +96,18 @@ class TodoItem extends TodoApp{
 	};
 };
 
+class TodoList{
+	constructor(nodeList) {
+		this.list = nodeList;
+	};
+
+	removeAll() {
+		this.list.forEach(item => {
+			item.remove();
+		});
+	};
+};
+
 const createTodo = (target, value) => {
 	const todoItem = new TodoItem(value);
 
