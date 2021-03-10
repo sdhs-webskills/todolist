@@ -58,8 +58,8 @@ function comCount() {
 };
 
 function cleCount() {
+    let countNum = 0;
     [...todoList.children].forEach(function (element) {
-        console.log(element)
         if (element.classList.contains("list")) {
             countNum++;
         } else {
@@ -68,30 +68,105 @@ function cleCount() {
         count.innerHTML = countNum;
     });
 };
+
+todoList.addEventListener('dblclick', function ({ target }) {
+    if (target.classList.contains('text')) {
+        const textInput = create('input');
+        const parent = target.parentNode;
+        let text = target.innerText
+        textInput.value = target.innerText;
+        textInput.classList.add('text');
+
+        parent.appendChild(textInput);
+        target.remove();
+        textInput.addEventListener('keydown', function (e) {
+            let key = e.key;
+
+            // const isKey = ['Enter','Escape'].includes(key);
+            if (key === 'Escape') {
+                const textP = create('p');
+                textP.classList.add('text');
+                textP.innerHTML = text
+                parent.appendChild(textP);
+                this.parentNode.children[2].remove();
+            }
+            if (key === 'Enter') {
+                const textP = create('p');
+                textP.classList.add('text');
+                textP.innerHTML = this.value;
+                parent.appendChild(textP)
+                textInput.remove();
+            }
+        })
+    }
+})
+
+
+// function start(){
+//     let json = JSON.parse(localStorage.getItem("json")) || [];
+
+//     let a = [
+//         {
+//             text:"가나다라",
+//             active:true
+//         }
+//     ]
+//     // css
+//     // li.active .check{ background:red }
+
+//     json.forEach( ({text,active}) => {
+//         const Li = item(text);
+//         if( active ){
+//             Li.classList.add("active");
+//         }
+//         todoList.insertAdjacentElement('afterbegin', Li);
+//     } );
+
+// }
+
+// let json = JSON.parse(localStorage.getItem("json")) || [];
+
+
+// function setLocalJSON(data){
+//     localStorage.setItem("json",JSON.stringify(data));
+// }
+
+// json = [1,321312];
+
+// setLocalJSON(json);
+
+
+function item(text) {
+    const todoLi = create("li");
+    const todoDiv = create("div");
+    const todoP = create("p");
+    const todoP2 = create("p");
+
+    todoLi.classList.add('list');
+    todoDiv.classList.add('check');
+    todoP.classList.add('text');
+    todoP2.classList.add('close');
+    todoP.innerHTML = text;
+    todoLi.appendChild(todoDiv);
+    todoLi.appendChild(todoP);
+    todoLi.appendChild(todoP2);
+    todoP2.innerHTML = 'X';
+    return todoLi;
+}
+
 mainInput.addEventListener('keydown', function (e) {
     let key = e.key.toLowerCase();
     if (key === "enter") {
         if (mainInput.value === '') {
             alert("정보를 입력하세요");
-
             return false;
         }
-        const todoLi = create("li");
-        const todoDiv = create("div");
-        const todoP = create("p");
-        const todoP2 = create("p");
 
-        todoLi.classList.add('list');
-        todoDiv.classList.add('check');
-        todoP.classList.add('text');
-        todoP2.classList.add('close');
-        todoP.innerHTML = mainInput.value;
-        todoLi.appendChild(todoDiv);
-        todoLi.appendChild(todoP);
-        todoLi.appendChild(todoP2);
+
+        const todoLi = item(this.value);
+
         todoList.insertAdjacentElement('afterbegin', todoLi);
-        todoP2.innerHTML = 'X';
-        mainInput.value = '';
+        this.value = '';
         controll.style.display = 'flex';
         normalCount();
         // hover
@@ -108,21 +183,36 @@ mainInput.addEventListener('keydown', function (e) {
 
 todoList.addEventListener('click', function ({ target }) {
     if (target.classList.contains('check')) {
-        target.parentNode.classList.add('li_ac');
-        target.parentNode.children[0].innerText = '✓';
+        target.parentNode.classList.toggle('li_ac');
+        if (target.parentNode.classList.contains('li_ac')) {
+            target.parentNode.children[0].innerText = '✓';
+        } else {
+            target.parentNode.children[0].innerText = '';
+        };
+        const button = document.querySelector(".sp_ac");
+        const id = button.id;
+
+        switch (id) {
+            case "all": allBtn.click();
+                break;
+            case "act": activeBtn.click();
+                break;
+            case "com": completedBtn.click();
+                break;
+        };
     };
-});;
+});
 
 todoList.addEventListener('click', function ({ target }) {
     if (target.classList.contains('close')) {
         target.parentNode.remove()
     }
+    cleCount()
 })
 
 
 allBtn.addEventListener("click", function () {
     if (!this.classList.contains('sp_ac')) { //없으면 sp_ac
-        console.log(1)
         this.classList.add('sp_ac')
     }
     for (let i = 0; i < todoList.children.length; i++) {
@@ -159,3 +249,14 @@ dleAllBtn.addEventListener('click', function () {
     controllDisplay();
 })
 
+allSel.addEventListener('click', function () {
+    [...todoList.children].forEach(list => {
+        if (list.classList.contains('list')) {
+            list.children[0].innerText = '✓';
+            list.classList.toggle('li_ac');
+            if (!todoList.children[0].classList.contains('li_ac')) {
+                list.children[0].innerText = '';
+            };
+        }
+    });
+});
