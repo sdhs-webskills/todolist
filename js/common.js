@@ -144,8 +144,19 @@ const dblClick =  function({ target }){
                 
                 // p 태그에 input 값 넣기, 클래스명 넣기
                 p.innerHTML = this.value;
+                
                 p.classList.add("text");
-        
+                // console.log(this.parentNode.dataset.id) // index값
+                let liid = this.parentNode.dataset.id
+
+                // let afterArr = itemsArray[liid-1];
+
+                itemsArray.splice(liid, 1)
+                console.log(liid)
+
+                // itemsArray.splice(target.parentNode.dataset.id,1);
+                localStorage.setItem('items', JSON.stringify(itemsArray));
+                
                 // input을 첫번째 자식뒤에 넣고, 첫번쨰 자식 지우기
                 this.parentNode.children[1].after(p);
                 this.parentNode.children[1].remove();
@@ -166,7 +177,32 @@ const dblClick =  function({ target }){
         });
     }
 
-}
+};
+
+let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
+
+
+
+
+// li(리스트) 만들어주는 거
+const createLi = function(text){
+    const li = Create("li");
+    const div = Create("div");
+    const p = Create("p");
+    const p2 = Create("p");
+    li.classList.add("list");
+    div.classList.add("check");
+    p.classList.add("text");
+    p2.classList.add("close");
+    p.innerText = text;
+    p2.innerText = `X`;
+    li.appendChild(div);
+    li.appendChild(p);
+    li.appendChild(p2);
+    
+    return li;
+};
+
 
 
 allBtn.addEventListener("click", function(){
@@ -232,34 +268,10 @@ clearBtn.addEventListener("click", function(){
 });
 
 
-let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
+
+const data = JSON.parse(localStorage.getItem('items'));
 
 
-localStorage.setItem('items', JSON.stringify(itemsArray)); 
-// const data = JSON.parse(localStorage.getItem('items'));
-
-
-// data.forEach(item => { 
-//     liMaker(item); 
-// });
-
-let addLi = function(text){
-    const li = Create("li");
-    const div = Create("div");
-    const p = Create("p");
-    const p2 = Create("p");
-    li.classList.add("list");
-    div.classList.add("check");
-    p.classList.add("text");
-    p2.classList.add("close");
-    p.innerHTML = text.value;
-    p2.innerText = `X`;
-    li.appendChild(div);
-    li.appendChild(p);
-    li.appendChild(p2);
-    
-    return li;
-}
 
 input.addEventListener("keydown", function({ key }){
     // input에세 엔터시 리스트 추가 하는거
@@ -271,40 +283,73 @@ input.addEventListener("keydown", function({ key }){
             return false;
         }
         
-        // localStorage.setItem('items', JSON.stringify(itemsArray));
+        
+        const addLi = createLi(this.value);
+        list.children[0].before(addLi);
+        
+        
         itemsArray.push(this.value);
+        localStorage.setItem('items', JSON.stringify(itemsArray)); 
 
-        let li = addLi(this.value);
-        console.log(li)
-        list.insertAdjacentElement("afterbegin", li);
+        [...list.children].forEach(function(ele, idx){
+            ele.dataset.id = "";
+            ele.dataset.id = idx;
+        })
+        // console.log(itemsArray);
+        // console.log(localStorage.getItem("items"));
+        
         input.value = "";
 
-
-        Count();
-
         
+        Count();
         // 마우스가 위로 올라가면 실행
-        li.addEventListener("mouseover", function(){ 
+        addLi.addEventListener("mouseover", function(){ 
             this.classList.add("hov");
         });
         
         // 마우스에서 사라지면 실행
-        li.addEventListener("mouseleave", function(){
+        addLi.addEventListener("mouseleave", function(){
             this.classList.remove("hov");
         });
-
-        li.addEventListener("dblclick", dblClick);
+        
+        addLi.addEventListener("dblclick", dblClick);
         
         allBtn.click();
     }
     Menu();
 });
 
+// localStorage 에서 불러와 리스트 작성
+data.forEach(function(ele, idx){
+    const addLi = createLi(ele);
+
+    // console.log(addLi)
+    addLi.dataset.id = idx;
+    // dataSet(addLi, idx);
+    addLi.dataset.num = 0;
+    list.children[0].before(addLi);
+
+    Count();
+    
+    addLi.addEventListener("mouseover", function(){ 
+        this.classList.add("hov");
+    });
+    
+    
+    addLi.addEventListener("mouseleave", function(){
+        this.classList.remove("hov");
+    });
+    addLi.addEventListener("dblclick", dblClick);
+        
+    allBtn.click();
+    Menu();
+})
 
 
 
 
 allCheck.addEventListener("click", function(){
+
     
     // 전체선택시 모든 체크 박스가 선택 되게 하는거
     allCheck.classList.toggle("all_ac");
@@ -331,6 +376,11 @@ list.addEventListener("click", function({ target }){
     // X버튼 누를시 리스트 삭제하는거 
     if(target.classList.contains("close")) {
         target.parentNode.remove();
+        // let ii = itemsArray.indexOf(target.parentNode.children[1].innerText)
+        // console.log(target.parentNode.dataset.id)
+        itemsArray.splice(target.parentNode.dataset.id,1);
+        localStorage.setItem('items', JSON.stringify(itemsArray));
         Menu();
+        Count();
     };
 });
