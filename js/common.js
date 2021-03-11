@@ -9,97 +9,48 @@ const dleAllBtn = document.querySelector('#cle');
 const count = document.querySelector('#item');
 const create = element => document.createElement(element);
 
-function controllDisplay() {
-    if (list.children.length > 1) {
-        controll.style.display = "flex";
-    } else {
-        controll.style.display = "none";
-    };
-};
+// //값이 추가 되었을때,li_ac가 들어가 있는 상태 ul에 childern에 있는 값 중에 (forEach,filter)돌려서 나온 값 중에 text를 setItem
+// function setStorage() {
+//     // let re = [...todoList.children.classList.contains('list')].forEach((el)=>{console.})
+//     // localStorage.setItem().
+//     let resut = [...todoList.children].forEach((er) => {
+//         er.classList.contains('list')
+//         console.log(er)
+//     })
+// }
 
-function todoListIf(e, className, block, none) {
-    if (todoList.children[e].classList.contains(className)) {
-        todoList.children[e].style.display = block;
-    } else {
-        todoList.children[e].style.display = none;
-    };
-};
 
-function btnBordre(This) {
-    [...This.parentNode.children].forEach((element) => {
-        //배열안에 들어있는 value들 마다 함수 실행
-        element.classList.remove("sp_ac");
-    });
-    This.classList.add("sp_ac");
-}
 
-function normalCount() {
-    return count.innerHTML = list.children.length - 1;
-};
 
-function actCount() {
-    let countNum = 0;
-    [...todoList.children].forEach(function (element) {
-        if (!element.classList.contains("li_ac")) {
-            countNum++;
-        }
-        count.innerHTML = countNum - 1;
-    });
-};
+// window.onload = function () {
+//     let title = document.querySelector("#title")
+//     let content = document.querySelector("#content")
+//     let submit = document.querySelector('#submit')
+//     submit.addEventListener('click', function (e) {
+//         // console.log(title.value, content.value)
+//         localStorage.setItem(title.value, content.value)
+//     })
 
-function comCount() {
-    let countNum = 0;
-    [...todoList.children].forEach(function (element) {
-        if (element.classList.contains("li_ac")) {
-            countNum++;
-        }
-        count.innerHTML = countNum;
-    });
-};
+// }
+// window.onload = function () {
+//     let target = document.querySelector('#target')
+//     let arr = []
+//     // console.log(localStorage.length)
+//     for (let i = 0; i < localStorage.length; i++) {
+//         let obj = {
+//             title: localStorage.key(i),
+//             content: localStorage.getItem(localStorage.key(i))
+//         }
+//         arr[i] = obj
+//     }
+//     console.log(arr.value)
 
-function cleCount() {
-    let countNum = 0;
-    [...todoList.children].forEach(function (element) {
-        if (element.classList.contains("list")) {
-            countNum++;
-        } else {
-            count.innerHTML = 0;
-        }
-        count.innerHTML = countNum;
-    });
-};
+//     target.innerHTML = JSON.stringify(arr);
 
-todoList.addEventListener('dblclick', function ({ target }) {
-    if (target.classList.contains('text')) {
-        const textInput = create('input');
-        const parent = target.parentNode;
-        let text = target.innerText
-        textInput.value = target.innerText;
-        textInput.classList.add('text');
+// }
 
-        parent.appendChild(textInput);
-        target.remove();
-        textInput.addEventListener('keydown', function (e) {
-            let key = e.key;
 
-            // const isKey = ['Enter','Escape'].includes(key);
-            if (key === 'Escape') {
-                const textP = create('p');
-                textP.classList.add('text');
-                textP.innerHTML = text
-                parent.appendChild(textP);
-                this.parentNode.children[2].remove();
-            }
-            if (key === 'Enter') {
-                const textP = create('p');
-                textP.classList.add('text');
-                textP.innerHTML = this.value;
-                parent.appendChild(textP)
-                textInput.remove();
-            }
-        })
-    }
-})
+
 
 
 // function start(){
@@ -135,6 +86,107 @@ todoList.addEventListener('dblclick', function ({ target }) {
 
 // setLocalJSON(json);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function controllDisplay() {
+    if (list.children.length > 1) {
+        controll.style.display = "flex";
+    } else {
+        controll.style.display = "none";
+    };
+};
+
+function todoListIf(e, className, block, none) {
+    if (todoList.children[e].classList.contains(className)) {
+        todoList.children[e].style.display = block;
+    } else {
+        todoList.children[e].style.display = none;
+    };
+};
+
+function btnBordre(This) {
+    [...This.parentNode.children].forEach((element) => {
+        //배열안에 들어있는 value들 마다 함수 실행
+        element.classList.remove("sp_ac");
+    });
+    This.classList.add("sp_ac");
+}
+
+function normalCount() {
+    count.innerHTML = document.querySelectorAll(".list").length;
+};
+
+function actCount() {
+    count.innerHTML = [...document.querySelectorAll(".list")].filter(list => list.classList.length === 1).length;
+};
+
+function comCount() {
+    count.innerHTML = document.querySelectorAll(".li_ac").length;
+};
+
+function cleCount() {
+    let countNum = 0;
+    [...todoList.children].forEach(function (element) {
+        if (element.classList.contains("list")) {
+            countNum++;
+        } else {
+            count.innerHTML = 0;
+        }
+        count.innerHTML = countNum;
+    });
+};
+
+// todoList.addEventListener('dblclick', function ({ target }) {
+//     if (target.classList.contains('text')) {
+//         const textInput = create('input');
+//         const parent = target.parentNode;
+//         let text = target.innerText
+//         textInput.value = target.innerText;
+//         textInput.classList.add('text');
+
+//         parent.appendChild(textInput);
+//         target.remove();
+//         textInput.addEventListener('keydown', function (e) {
+//             let key = e.key;
+
+//             // const isKey = ['Enter','Escape'].includes(key);
+//             if (key === 'Escape') {
+//                 const textP = create('p');
+//                 textP.classList.add('text');
+//                 textP.innerHTML = text
+//                 parent.appendChild(textP);
+//                 this.parentNode.children[2].remove();
+//             }
+//             if (key === 'Enter') {
+//                 const textP = create('p');
+//                 textP.classList.add('text');
+//                 textP.innerHTML = this.value;
+//                 parent.appendChild(textP)
+//                 textInput.remove();
+//             }
+//         })
+//     }
+// })
 
 function item(text) {
     const todoLi = create("li");
@@ -177,9 +229,29 @@ mainInput.addEventListener('keydown', function (e) {
         todoLi.addEventListener("mouseleave", function () {
             this.classList.remove('hov');
         });
+        // setStorage();
     };
 });
 
+const todoCounter = () => {
+    const button = document.querySelector(".sp_ac");
+    const id = button.id;
+
+    switch (id) {
+        case "all":
+            normalCount();
+            allBtn.click();
+            break;
+        case "act":
+            actCount();
+            activeBtn.click();
+            break;
+        case "com":
+            comCount();
+            completedBtn.click();
+            break;
+    };
+};
 
 todoList.addEventListener('click', function ({ target }) {
     if (target.classList.contains('check')) {
@@ -189,17 +261,8 @@ todoList.addEventListener('click', function ({ target }) {
         } else {
             target.parentNode.children[0].innerText = '';
         };
-        const button = document.querySelector(".sp_ac");
-        const id = button.id;
 
-        switch (id) {
-            case "all": allBtn.click();
-                break;
-            case "act": activeBtn.click();
-                break;
-            case "com": completedBtn.click();
-                break;
-        };
+        todoCounter();
     };
 });
 
@@ -207,7 +270,6 @@ todoList.addEventListener('click', function ({ target }) {
     if (target.classList.contains('close')) {
         target.parentNode.remove()
     }
-    cleCount()
 })
 
 
@@ -218,27 +280,30 @@ allBtn.addEventListener("click", function () {
     for (let i = 0; i < todoList.children.length; i++) {
         if (todoListIf(i, 'list', 'block', 'none'));
     }
-    normalCount();
+
     btnBordre(this);
     controllDisplay();
+    todoCounter();
 })
 
 activeBtn.addEventListener("click", function () {
     for (let i = 0; i < todoList.children.length; i++) {
         if (todoListIf(i, 'li_ac', 'none', 'block'));
     };
-    actCount();
+
     btnBordre(this);
     controllDisplay();
+    todoCounter();
 });
 
 completedBtn.addEventListener('click', function () {
     for (let i = 0; todoList.children.length > i; i++) {
         if (!todoListIf(i, 'li_ac', 'block', 'none'));
     };
-    comCount();
+
     btnBordre(this);
     controllDisplay();
+    todoCounter();
 });
 
 dleAllBtn.addEventListener('click', function () {
@@ -260,3 +325,7 @@ allSel.addEventListener('click', function () {
         }
     });
 });
+
+
+
+
