@@ -147,12 +147,12 @@ const dblClick =  function({ target }){
                 
                 p.classList.add("text");
                 // console.log(this.parentNode.dataset.id) // index값
-                let liid = this.parentNode.dataset.id
+                // let liid = this.parentNode.dataset.id
 
                 // let afterArr = itemsArray[liid-1];
 
-                itemsArray.splice(liid, 1)
-                console.log(liid)
+                // itemsArray.splice(liid, 1)
+                // console.log(liid)
 
                 // itemsArray.splice(target.parentNode.dataset.id,1);
                 localStorage.setItem('items', JSON.stringify(itemsArray));
@@ -202,6 +202,32 @@ const createLi = function(text){
     
     return li;
 };
+
+window.onload = function(){
+    data.forEach(function(ele, idx){
+    
+        const addLi = createLi(ele);
+    
+        addLi.dataset.id = idx;
+        
+        list.children[0].before(addLi);
+    
+        allCount();
+        
+        addLi.addEventListener("mouseover", function(){ 
+            this.classList.add("hov");
+        });
+        
+        
+        addLi.addEventListener("mouseleave", function(){
+            this.classList.remove("hov");
+        });
+        addLi.addEventListener("dblclick", dblClick);
+            
+        allBtn.click();
+        Menu(); 
+    });
+}
 
 
 
@@ -263,14 +289,19 @@ clearBtn.addEventListener("click", function(){
     [...document.querySelectorAll(".li_ac")].forEach((list) => {
         list.remove();
     });
+    
     allBtn.click();
     Menu();
 });
 
 
+const inputDate = function(text){
+    itemsArray.push(text);
+    localStorage.setItem('items', JSON.stringify(itemsArray)); 
+    data = JSON.parse(localStorage.getItem('items'));
+}
 
-const data = JSON.parse(localStorage.getItem('items'));
-
+let data = JSON.parse(localStorage.getItem('items'));
 
 
 input.addEventListener("keydown", function({ key }){
@@ -287,63 +318,73 @@ input.addEventListener("keydown", function({ key }){
         const addLi = createLi(this.value);
         list.children[0].before(addLi);
         
-        
-        itemsArray.push(this.value);
-        localStorage.setItem('items', JSON.stringify(itemsArray)); 
+        inputDate(this.value);
 
-        [...list.children].forEach(function(ele, idx){
-            ele.dataset.id = "";
-            ele.dataset.id = idx;
-        })
-        // console.log(itemsArray);
-        // console.log(localStorage.getItem("items"));
-        
-        input.value = "";
 
+        // const lists = [];
+        // lists = data.forEach(function(ele, idx){
+
+        //     const addLi = createLi(ele);
         
+        //     addLi.dataset.id = idx;
+        //     addLi.dataset.num = 0;
+        //     // console.log(list)
+            
+        //     return addLi;
+        // });
+        // console.log(lists)
+        // const addLi = lists[];
+        // list.children[0].before(addLi);
+
+
+
+
+
+
+
+
+
+
         Count();
-        // 마우스가 위로 올라가면 실행
+        
         addLi.addEventListener("mouseover", function(){ 
             this.classList.add("hov");
         });
         
-        // 마우스에서 사라지면 실행
+        
         addLi.addEventListener("mouseleave", function(){
             this.classList.remove("hov");
         });
-        
         addLi.addEventListener("dblclick", dblClick);
-        
+            
         allBtn.click();
+        Menu(); 
+
+        
+        input.value = "";
+
+        
+        // Count();
+        // // 마우스가 위로 올라가면 실행
+        // addLi.addEventListener("mouseover", function(){ 
+        //     this.classList.add("hov");
+        // });
+        
+        // // 마우스에서 사라지면 실행
+        // addLi.addEventListener("mouseleave", function(){
+        //     this.classList.remove("hov");
+        // });
+        
+        // addLi.addEventListener("dblclick", dblClick);
+        
+        // allBtn.click();
     }
     Menu();
 });
 
-// localStorage 에서 불러와 리스트 작성
-data.forEach(function(ele, idx){
-    const addLi = createLi(ele);
 
-    // console.log(addLi)
-    addLi.dataset.id = idx;
-    // dataSet(addLi, idx);
-    addLi.dataset.num = 0;
-    list.children[0].before(addLi);
 
-    Count();
-    
-    addLi.addEventListener("mouseover", function(){ 
-        this.classList.add("hov");
-    });
-    
-    
-    addLi.addEventListener("mouseleave", function(){
-        this.classList.remove("hov");
-    });
-    addLi.addEventListener("dblclick", dblClick);
-        
-    allBtn.click();
-    Menu();
-})
+
 
 
 
@@ -375,12 +416,41 @@ list.addEventListener("click", function({ target }){
 
     // X버튼 누를시 리스트 삭제하는거 
     if(target.classList.contains("close")) {
+        
+        // console.log(this)
         target.parentNode.remove();
+        // reverse에 list.children 거꾸로 뒤집어 저장
+        const reverse = [...list.children].reverse();
+        // .controll 삭제
+        reverse.shift();
+
+        // localStorage에서 삭제
+        itemsArray.splice(target.parentNode.dataset.id, 1);
+
+        // li 삭제 할때마다 id값 재설정
+        reverse.forEach(function(ele, idx){
+            console.log(ele)
+            if(ele == undefined){
+                return false;
+            }
+            ele.dataset.id = "";
+            ele.dataset.id = idx;
+        });
+        
+        
+
         // let ii = itemsArray.indexOf(target.parentNode.children[1].innerText)
         // console.log(target.parentNode.dataset.id)
-        itemsArray.splice(target.parentNode.dataset.id,1);
         localStorage.setItem('items', JSON.stringify(itemsArray));
+
         Menu();
         Count();
     };
 });
+
+
+
+// 해야할거
+// 1. 추가시 id값 저장
+// 2. 완료된 목록 유지 시키기
+// 3. 완료된 목록 전체 삭제시 전부 삭제 시키기
