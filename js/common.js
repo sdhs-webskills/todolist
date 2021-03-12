@@ -10,6 +10,9 @@ const activeBtn = document.querySelector("#act");
 const completedBtn = document.querySelector("#com");
 const clearBtn = document.querySelector("#cle");
 
+let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
+let data = JSON.parse(localStorage.getItem('items'));
+
 
 
 const Menu = function(){
@@ -65,12 +68,6 @@ const ComCount = function(){
     count.innerHTML = blockList.length;
 };
 
-// const inputLocal = function(thisId, thisNum){
-//     itemsArray.splice(thisId, 0, {"text": thisText, "num": thisNum})
-//     localStorage.setItem('items', JSON.stringify(itemsArray)); 
-// }
-
-
 
 const checkBox =  function({ target }){
     if(target.classList.contains("check")) {
@@ -99,7 +96,6 @@ const checkBox =  function({ target }){
             itemsArray.splice(thisId, 0, {"text": thisText, "num": target.parentNode.dataset.num})
             localStorage.setItem('items', JSON.stringify(itemsArray)); 
         }
-
 
 
         // 체크표시 해놓는거
@@ -137,6 +133,7 @@ const checkBox =  function({ target }){
 
 };
 
+
 // 리스트 더블 클릭시 수정 하게 하는 거
 const dblClick =  function({ target }){
     
@@ -170,14 +167,24 @@ const dblClick =  function({ target }){
                 
                 // p 태그에 input 값 넣기, 클래스명 넣기
                 p.innerHTML = this.value;
-                
                 p.classList.add("text");
-                // itemsArray.splice(target.parentNode.dataset.id,1);
+
+                
+                const thisId = this.parentNode.dataset.id;
+                const thisNum = this.parentNode.dataset.num;
+                const thisText = this.value;
+
+    
+                itemsArray.splice(thisId, 1);
+                itemsArray.splice(thisId, 0, {"text": thisText, "num": thisNum});
+
                 localStorage.setItem('items', JSON.stringify(itemsArray));
                 
                 // input을 첫번째 자식뒤에 넣고, 첫번쨰 자식 지우기
                 this.parentNode.children[1].after(p);
                 this.parentNode.children[1].remove();
+
+
             }
             // Esc를 눌렀을때
             if(key == "Escape"){
@@ -196,10 +203,6 @@ const dblClick =  function({ target }){
     }
 
 };
-
-let itemsArray = JSON.parse(localStorage.getItem('items')) || [];
-
-
 
 
 // li(리스트) 만들어주는 거
@@ -222,8 +225,6 @@ const createLi = function(text){
 };
 
 
-
-
 allBtn.addEventListener("click", function(){
     Border(this);
 
@@ -239,6 +240,7 @@ allBtn.addEventListener("click", function(){
     allCount();
     Menu();
 });
+
 
 activeBtn.addEventListener("click", function(){
     Border(this);
@@ -276,6 +278,7 @@ completedBtn.addEventListener("click", function(){
     Menu();
 });
 
+
 clearBtn.addEventListener("click", function(){
     
     // clearBtn버튼 클릭시 완료된 모든 리스트 삭제 시키는 것
@@ -286,10 +289,6 @@ clearBtn.addEventListener("click", function(){
         // const thisText = list.children[1].innerText;
 
         itemsArray.splice(list.dataset.id, 1);
-
-        // itemsArray.splice(thisId, 0, {"text": thisText, "num": target.parentNode.dataset.num})
-        // localStorage.setItem('items', JSON.stringify(itemsArray)); 
-
 
 
     });
@@ -319,8 +318,6 @@ const inputDate = function(text, num){
     localStorage.setItem('items', JSON.stringify(itemsArray)); 
     data = JSON.parse(localStorage.getItem('items'));
 }
-
-let data = JSON.parse(localStorage.getItem('items'));
 
 
 input.addEventListener("keydown", function({ key }){
@@ -373,10 +370,8 @@ window.onload = function(){
         const addLi = createLi(text);
         addLi.dataset.id = idx;
         addLi.dataset.num = num;
-        // console.log(addLi)
 
-        // console.log(ele.num)
-        if(ele.num === "1"){
+        if(ele.num == "1"){
             addLi.classList.add("li_ac");
             addLi.children[0].innerText = "✓";
         } else {
@@ -405,12 +400,8 @@ window.onload = function(){
 }
 
 
-
-
-
 allCheck.addEventListener("click", function(){
 
-    
     // 전체선택시 모든 체크 박스가 선택 되게 하는거
     allCheck.classList.toggle("all_ac");
     let lists = [...list.children].filter(function(ele){
@@ -421,12 +412,27 @@ allCheck.addEventListener("click", function(){
             el.classList.add("li_ac")
             el.children[0].innerHTML = `✓`;
             el.dataset.num = 1;
+
+            const thisId = el.dataset.id;
+            const thisText = el.children[1].innerText;
+
+            itemsArray.splice(thisId, 1);
+            itemsArray.splice(thisId, 0, {"text": thisText, "num": 1});
+            localStorage.setItem('items', JSON.stringify(itemsArray)); 
         });
     } else {
         lists.forEach(function(el){
             el.classList.remove("li_ac")
             el.children[0].innerHTML = ``;
             el.dataset.num = 0;
+
+            const thisId = el.dataset.id;
+            const thisText = el.children[1].innerText;
+
+            itemsArray.splice(thisId, 1);
+
+            itemsArray.splice(thisId, 0, {"text": thisText, "num": 0});
+            localStorage.setItem('items', JSON.stringify(itemsArray)); 
         });
     }
 
@@ -458,20 +464,9 @@ list.addEventListener("click", function({ target }){
         });
         
         
-
-        // let ii = itemsArray.indexOf(target.parentNode.children[1].innerText)
-        // console.log(target.parentNode.dataset.id)
         localStorage.setItem('items', JSON.stringify(itemsArray));
 
         Menu();
         Count();
     };
 });
-
-
-
-// 해야할거
-// 1. 추가시 id값 저장 [O]
-// 2. 완료된 목록 유지 시키기 [O]
-// 3. 완료된 목록 전체 삭제시 전부 삭제 시키기 [O]
-// 4. 수정, 취소 기능 완성 시키기 [X]
