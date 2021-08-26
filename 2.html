@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+class 구독자 {
+  함수;
+  constructor(함수) {
+    this.함수 = 함수;
+  }
+}
+class 발행기관 {
+  구독자들 = new Set();
+
+  구독자_등록(구독자) {
+    this.구독자들.add(구독자);
+  }
+
+  발행 () {
+    this.구독자들.forEach(구독자 => 구독자.함수());
+  }
+}
+
+const _발행기관 = new 발행기관();
+const 원선일 = new 구독자(() => console.log('내 이름은 원선일. 지각했죠'));
+const 노승재 = new 구독자(() => console.log('내 이름은 노승재. 기능대회가 싫어요'));
+
+_발행기관.구독자_등록(원선일);
+_발행기관.구독자_등록(노승재);
+
+_발행기관.발행();
+_발행기관.발행();
+_발행기관.발행();
+_발행기관.발행();
+_발행기관.발행();
+
+</script>
+</body>
+</html>

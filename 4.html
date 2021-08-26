@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+const state = {
+  원선일: '노승재 바보',
+  노승재: '김민성 바보',
+  김민성: '그래도 내가 승재랑 선일이보다는 마음이 편해',
+  김준서: '헷갈려요'
+};
+
+let currentObserver = null;
+Object.keys(state).forEach(key => {
+  let _value = state[key];
+  const observers = [];
+  Object.defineProperty(state, key, {
+    get () {
+      observers.push(currentObserver)
+      return _value;
+    },
+    set (value) {
+      _value = value;
+      observers.forEach(fn => fn())
+    }
+  })
+})
+
+currentObserver = () => console.log('민성이 바보')
+console.log(state.김민성);
+state.김민성 = "abcdef";
+
+currentObserver = () => console.log('노승재 바보 멍청이 똥개 말미잘 해삼')
+console.log(state.원선일);
+state.원선일 = "1";
+
+
+</script>
+</body>
+</html>
