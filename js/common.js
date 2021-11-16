@@ -140,20 +140,69 @@ listBox.addEventListener("mouseenter", () => {  // listBox에 마우스 올리�
             if(target.classList[0] === "list"){    // 올린 곳이 list면 실행
                 target.classList.add("hov");    // list에 hov 클래스 추가
             }
-            target.children[2].addEventListener("click", ({target}) => {    // x버튼 클릭시 실행
-                todoList.forEach((ele, idx) => {
-                    if(ele.num == target.parentNode.dataset["num"]){
-                        delete todoList[idx];   // 해당 todo 배열에서 삭제
-                    }
-                })
-                createTodo();
-            })
         })
         ele.addEventListener("mouseleave", ({target}) => {  // 마우스가 list에서 벗어나면 실행
             target.classList.remove("hov");     // list에서 hov 클래스 삭제
         })
     })
 })
+
+listBox.addEventListener("click", ({target}) => {    // x버튼 클릭시 실행
+    if(target.classList.contains("close")){
+        todoList.forEach((ele, idx) => {
+            if(ele.num == target.parentNode.dataset["num"]){
+                delete todoList[idx];   // 해당 todo 배열에서 삭제
+            }
+        })
+        createTodo();
+    }
+})
+
+listBox.addEventListener("dblclick", ({target}) => {
+    if(target.classList.contains("text")){
+        let thisValue = target.innerText;
+        let thisParent = target.parentNode;
+        let thisParentNum = target.parentNode.dataset["num"];
+        target.remove();
+        
+        let input = document.createElement("input");
+        input.classList.add("text");
+        thisParent.children[0].after(input);
+        input.focus();
+        
+        input.addEventListener("keydown", ({key}) => {
+            if(key === "Enter"){
+                let inputVal = input.value;
+                if(inputVal === ""){
+                    alert("수정할 내용을 입력해 주세요");
+                }
+                input.remove();
+                let p = document.createElement("p");
+                
+                p.classList.add("text");
+                p.innerText = inputVal;
+                thisParent.children[0].after(p)
+
+                todoList.forEach((ele, idx) => {
+                    if(ele.num == thisParentNum){
+                        todoList[idx].text = inputVal;
+                    }
+                })
+                createTodo();
+            }
+            if(key === "Escape"){
+                input.remove();
+
+                let p = document.createElement("p");
+                p.classList.add("text");
+                p.innerText = thisValue;
+                thisParent.children[0].after(p);
+            }
+        })
+    }
+    
+})
+
 
 allBtn.addEventListener("click", () => {    // allBtn 클릭시 실행
     highBtn(allBtn);
