@@ -12,7 +12,7 @@ const cleBtn = document.querySelector("#wrap #list #controll #cle");
 
 const btns = [allBtn, actBtn, comBtn];                          // 컨트롤바에 있는 버튼 3개를 담고 있는 배열
 let todoList = JSON.parse(localStorage.getItem('Todo')) || [];  // TodoList localStorage에서 가져오기 || 아님 초기값
-let todoCount = todoList[todoList.length - 1].num + 1 || 0;     // TodoList의 번호
+let todoCount = todoList[todoList.length - 1] || 0;     // TodoList의 번호
 
 const getLocal = () => {    // localStorage에 todoList를 저장하는 함수
     localStorage.setItem('Todo', JSON.stringify(todoList));     
@@ -91,6 +91,9 @@ searchBox.addEventListener("keydown", ({key}) => {  // input에 엔터 입력시
         if(searchBox.value === ""){     // 빈값은 안들어가게 막기
             alert("내용을 입력해 주세요")
             return false;
+        }
+        if(typeof(todoCount) !== "number"){
+            todoCount = todoCount.num + 1;
         }
         todoList.push({num: todoCount, text: searchBox.value, check: false});
         todoCount += 1;
