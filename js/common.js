@@ -2,9 +2,7 @@ const $ = e => document.querySelector(e);
 const $all = e => [...document.querySelectorAll(e)];
 
 function render() {
-    const state = {
-        chk: false
-    }
+    let chk = false;
     const todoAdd = ({key, code, keyCode}) => {
         if(key === 'enter' || code === 'enter' || keyCode === 13) {
             try {
@@ -31,17 +29,19 @@ function render() {
         $all('.check').forEach(e => e.addEventListener('click', toggleChk));
         $all('.list').forEach(e => e.addEventListener('mouseover', liOver));
         $all('.list').forEach(e => e.addEventListener('mouseleave', liLeave));
+        // $all('.list').forEach(e => e.addEventListener('dblclick', edit));
     }
     const addFlex = () => {
         if($all('.list').length > 0) {
             $('#controll').classList.add('flex');
             $('#item').innerText = $all('.list').length + '개';
+            $('#all_sel').addEventListener('click', allChk);
         }
     }
     const allChk = () => {
-        state.chk = state.chk ? state.chk = false : state.chk = true;
+        chk = chk ? chk = false : chk = true;
         $all('.list').forEach(e => {
-            if(state.chk) {
+            if(chk) {
                 $all('.check').forEach(e => e.innerText = '✓');
                 e.classList.add('li_ac');
             } else {
@@ -94,8 +94,10 @@ function render() {
     const liLeave = function() {
         this.classList.remove('hov');
     }
+    // const edit = function() {
+    //     console.log(this);
+    // }
     $('#main').addEventListener('keydown', e => todoAdd(e));
-    $('#all_sel').addEventListener('click', allChk);
     $('#all').addEventListener('click', allBtnClick);
     $('#act').addEventListener('click', actBtnClick);
     $('#com').addEventListener('click', comBtnClick);
