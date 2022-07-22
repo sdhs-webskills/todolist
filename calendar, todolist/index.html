@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calendar&todolist</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header class="flex">
+        <button id="prevMonthr" class="monthBtn" data-m="0">저번달</button>
+        <h1><span class="year">0000</span>년 <span class="month">0</span>월</h1>
+        <button id="nextMonth" class="monthBtn" data-m="1">다음달</button>
+    </header>
+    <div id="calendar"></div>
+    <div id="todoList" class="none">
+        <div id="wrap">
+            <h1>todos</h1>
+            <div id="input">
+                <div id="all_sel"></div>
+                <input type="text" placeholder="What needs to be done?" id="main" size="45">
+            </div>
+            <ul id="list">
+                <li id="controll">
+                    <span id="item"></span>
+                    <div id="flex">
+                        <span id="all" class="sp_ac">All</span>
+                        <span id="act">Active</span>
+                        <span id="com">Completed</span>
+                    </div>
+                    <span id="cle">Clear completed</span>
+                </li>
+            </ul>
+            <button class="modalClose">[닫기 X]</button>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+</html>

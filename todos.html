@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li{ list-style: none;}
+        .flex{ display: flex; align-items: center; gap:1rem; }
+
+        .checked,
+        .selected,
+        .active{ background-color: red; }
+
+        .todo-clear-complete-btn{ visibility: hidden; }
+        .todo-clear-complete-btn.show{ visibility: visible;}
+    </style>
+</head>
+<body>
+    <div class="todos">
+        <div class="todo-header flex">
+            <div class="todo-all-checked">all checked</div>
+            <input type="text" class="todo-input">
+        </div>
+        <div class="todo-contents"></div>
+        <div class="todo-footer flex">
+            <div class="todo-count"></div>
+            <ul class="todo-status flex">
+                <li data-status="all">all</li>
+                <li data-status="active">active</li>
+                <li data-status="complete">complete</li>
+            </ul>
+            <button class="todo-clear-complete-btn">clear complete</button>
+        </div>
+    </div>
+    <script src="js/todos.js"></script>
+</body>
+</html>

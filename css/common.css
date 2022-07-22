@@ -29,3 +29,6 @@ h1{font-size:70px;color:rgb(146, 224, 146);text-align:center;}
 .hov .close{display:block;}
 .list_input .close{display:none!important;}
 .set_text{text-align:center;color:rgb(65, 192, 65);margin-bottom:200px;} 
+
+.flex {display: flex !important;}
+.edit {line-height:40px;font-size:25px;width:580px;padding:10px;margin-left:60px;word-break:break-all;}

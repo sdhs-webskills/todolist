@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+    font-family: sans-serif;
+}
+a {text-decoration: none; display: block; pointer-events: none;}
+.monthBtn {font-size: 2rem; height: 100px; margin: auto 0; border: none; background: #fff;}
+
+.flex {display: flex;}
+.grid {display: grid;}
+.rel {position: relative;}
+.abs {position: absolute;}
+.toDay {transition: .3s;}
+.toDay:hover {background: #ccc;}
+.prevDay {color: #aaa;}
+
+#calendar {width: 1000px; margin: 0 auto; text-align: center;}
+
+header {
+    width: 1000px;
+    height: 200px;
+    margin: 0 auto;
+    justify-content: space-around;
+    line-height: 200px;
+    font-size: 1.5rem;
+}
+
+.calendar {
+    grid-template-columns: repeat(7, 1fr);
+    width: 1000px;
+}
+
+.calendar > div {font-size: 2rem; line-height: 2; padding: 1rem;}
+
+.calendar > div:nth-child(7n) > a {color: blue;}
+
+.calendar > div:nth-child(7n + 1) > a {color: red;}
+
+.calendar > .w {
+    padding: 1rem;
+    background: darkblue;
+    color: #fff !important;
+}
+
+
+#wrap h1{font-size:70px;color:#333;text-align:center;}
+#input{background:#fff;box-shadow:0 2px 4px #666;width:717px;height:60px;}
+#all_sel{width:60px;height:40px;float:left;font-size:22px;color:#ccc;transform:rotate(90deg);transform-origin:left top;margin-left:40px;text-align:center;cursor:default;}
+#all_sel::before{content:'❯';font-size:22px;color:#ccc;}
+#main{background:none;border:none;font-size:25px;line-height:40px;margin-left:-40px;margin-top:10px;margin-bottom:10px;}
+#main:focus{outline:none;}
+#main::placeholder{color:#ccc;}
+#list{box-shadow:0 0 4px #666; height: 518px; overflow-y: scroll;}
+.list{background:#fff;width:700px;height:auto;position:relative;border-bottom:1px solid #ddd;}
+.check{float:left;width:30px;height:30px;border-radius:50%;background:none;margin:auto 11px;border:2px solid #eee;position:absolute;top:0;bottom:0;color:green;line-height:30px;text-align:center;font-size:20px;user-select:none;}
+.text{line-height:40px;padding-top:10px;font-size:25px;width:600px;padding:10px;margin-left:60px;word-break:break-all;}
+#controll{background:#fff;width:700px;height:30px;display:none;color:#aaa;justify-content:space-around;cursor:default;}
+#flex{display:flex;width:200px;justify-content:space-around;align-items:center;margin-right:100px;height:30px;}
+#flex span{border:1px solid rgba(0,0,0,0);border-radius:3px;line-height:21px;padding:0 3px;cursor:pointer;}
+.sp_ac{border:1px solid gray!important;}
+#item,#cle{margin:0 20px;line-height:30px;width:120px;}
+#cle:hover{text-decoration:underline;cursor:pointer;}
+.act .li_ac{display:none;}
+.com .list{display:none;}
+.com .li_ac{display:block!important;}
+.all_ac{color:#444!important;}
+.li_ac{color:#aaa !important;text-decoration:line-through;}
+.li_inp{background:none;font-size:25px;line-height:40px;margin-top:10px;margin-bottom:10px;margin-left:60px;}
+.li_inp:focus{outline:none;}
+.close{position:absolute;font-weight:bold;color:red;right:15px;bottom:16px;display:none;cursor:pointer;font-size:20px;}
+.hov .close{display:block;}
+.list_input .close{display:none!important;}
+.set_text{text-align:center;color:rgb(65, 192, 65);margin-bottom:200px;}
+
+.flex {display: flex !important;}
+.edit {line-height:40px;font-size:25px;width:580px;padding:10px;margin-left:60px;word-break:break-all;}
+
+#todoList {position: fixed; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.5);}
+#wrap {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 757px; height: 770px; background:#fff; padding: 20px;}
+.none {display: none;}
+.modalClose {margin: 0 auto; display: block; height: 59px; width: 100%;}
